@@ -1,0 +1,151 @@
+
+#box{
+	margin:0px;
+	width:300px;
+	height:300px;
+	padding:0px;
+	border:1px solid #4a5c82;
+	clear:both;
+	background: -webkit-linear-gradient(#ffffff, #cccccc); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#ffffff, #cccccc); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#ffffff, #cccccc); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#ffffff, #cccccc); 
+}	
+.block{
+	margin:0px;
+	/*display: table-cell;*/
+			display: inline-block;
+			float:left;
+	min-width:10px;
+	min-height:10px;	
+	padding:0px;
+	border:none;
+	width:10px;
+	height:10px;	
+}
+.block.marked{
+	border:1px dotted white;
+	width:8px;
+	height:8px;
+	min-width:8px;
+	min-height:8px;
+
+
+background: -webkit-linear-gradient(#56c4f0, #0e5269); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#56c4f0, #0e5269); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#56c4f0, #0e5269); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#56c4f0, #0e5269); 
+  
+	
+}
+.block.marked.starttop {
+	border-radius:none;
+	border-top-radius:25px;
+	-webkit-border-radius:0px;
+	-webkit-border-top-radius:25px;
+}
+.block.startdown {
+	-webkit-border-radius:0px;
+	-webkit-border-bottom-right-radius:25px;
+	-webkit-border-bottom-left-radius:25px;
+}
+.block.enddown {
+	-webkit-border-radius:0px;
+	-webkit-border-bottom-right-radius:25px;
+	-webkit-border-bottom-left-radius:25px;
+}
+
+.block.marked.startleft {
+	border-radius:none;
+	border-left-radius:25px;
+}
+.block.marked.startright {
+	border-radius:none;
+	border-right-radius:25px;
+
+}
+
+
+@-webkit-keyframes blink {
+	from{
+
+
+	background-color:transparent;
+	}
+	to{
+
+	
+	background: -webkit-linear-gradient(#56c4f0, #0e5269); 
+
+	}
+
+}
+@-moz-keyframes blink {
+	from{
+		background-color:transparent;
+	}
+	to{
+/*	  background: -moz-linear-gradient(#56c4f0, #0e5269); /* For Firefox 3.6 to 15 */
+	  background:orange;
+	}
+
+}
+@-o-keyframes blink {
+	from{
+		background-color:transparent;
+	}
+	to{
+
+		background: -o-linear-gradient(#56c4f0, #0e5269); /* For Opera 11.1 to 12.0 */
+	}
+
+}
+@keyframes blink {
+	from{
+
+
+	background-color:transparent;
+	}
+	to{
+
+background: -moz-linear-gradient(#56c4f0, #0e5269); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#56c4f0, #0e5269); 
+	}
+
+}
+.pointScore{
+	  -webkit-animation:  blink 1s infinite;
+  	  -moz-animation: blink 1s infinite;
+	  -o-animation:  blink  1s infinite;
+      animation:  blink  1s infinite;
+      
+}
+#menuDiv{
+width:300px;
+height:28px;
+	color:#4a5c82;
+}
+#menuDiv .gameActions{
+	float:left;
+	width:28px;
+	height:28px;
+
+}
+#menuDiv .restart{
+	background:transparent url('restart.png');
+}
+#menuDiv .pause{
+	background:transparent url('pause.png');
+}
+#menuDiv .play{
+	background:transparent url('play.png');
+}	
+#menuDiv .score,
+#menuDiv .level
+{
+	float:right;
+	vertical-align: middle;
+	line-height:28px;
+	margin:0px 5px;
+	
+}
