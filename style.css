@@ -1,16 +1,37 @@
 
-#box{
+#box,#mask{
 	margin:0px;
 	width:300px;
 	height:300px;
 	padding:0px;
-	border:1px solid #4a5c82;
+	border:1px solid white;
 	clear:both;
-	background: -webkit-linear-gradient(#ffffff, #cccccc); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(#ffffff, #cccccc); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(#ffffff, #cccccc); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#ffffff, #cccccc); 
+	position: relative;
+background:black;
 }	
+#mask{
+	height:362px;
+	top:-30px;
+	position:absolute;
+	background:gray;
+	display:none;
+	z-index:1;
+}
+.wall{
+	background-color:white;
+}
+.menuDiv .difficultLevel{
+	float:right;
+	padding-right:10px;
+}
+.difficultLevel label{
+line-height: 28px;
+
+}
+.difficultLevel label.current{
+
+color: #FF9900;
+}
 .block{
 	margin:0px;
 	/*display: table-cell;*/
@@ -24,49 +45,24 @@
 	height:10px;	
 }
 .block.marked{
-	border:1px dotted white;
+	border:1px dotted black;
 	width:8px;
 	height:8px;
 	min-width:8px;
 	min-height:8px;
 
 
-background: -webkit-linear-gradient(#56c4f0, #0e5269); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(#56c4f0, #0e5269); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(#56c4f0, #0e5269); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#56c4f0, #0e5269); 
+background: -webkit-linear-gradient(#FF9900, #FF6600); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#FF9900, #FF6600); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#FF9900, #FF6600); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#FF9900, #FF6600); 
   
 	
 }
-.block.marked.starttop {
-	border-radius:none;
-	border-top-radius:25px;
-	-webkit-border-radius:0px;
-	-webkit-border-top-radius:25px;
-}
-.block.startdown {
-	-webkit-border-radius:0px;
-	-webkit-border-bottom-right-radius:25px;
-	-webkit-border-bottom-left-radius:25px;
-}
-.block.enddown {
-	-webkit-border-radius:0px;
-	-webkit-border-bottom-right-radius:25px;
-	-webkit-border-bottom-left-radius:25px;
-}
-
-.block.marked.startleft {
-	border-radius:none;
-	border-left-radius:25px;
-}
-.block.marked.startright {
-	border-radius:none;
-	border-right-radius:25px;
-
-}
 
 
-@-webkit-keyframes blink {
+
+@keyframes blink {
 	from{
 
 
@@ -74,22 +70,12 @@ background: -webkit-linear-gradient(#56c4f0, #0e5269); /* For Safari 5.1 to 6.0 
 	}
 	to{
 
-	
-	background: -webkit-linear-gradient(#56c4f0, #0e5269); 
 
+  background: linear-gradient(#56c4f0, #0e5269); 
 	}
 
 }
-@-moz-keyframes blink {
-	from{
-		background-color:transparent;
-	}
-	to{
-/*	  background: -moz-linear-gradient(#56c4f0, #0e5269); /* For Firefox 3.6 to 15 */
-	  background:orange;
-	}
 
-}
 @-o-keyframes blink {
 	from{
 		background-color:transparent;
@@ -100,52 +86,69 @@ background: -webkit-linear-gradient(#56c4f0, #0e5269); /* For Safari 5.1 to 6.0 
 	}
 
 }
-@keyframes blink {
+@-webkit-keyframes blink {
 	from{
 
 
-	background-color:transparent;
+	background: -webkit-linear-gradient(#FF9900, #FF6600);
 	}
 	to{
 
-background: -moz-linear-gradient(#56c4f0, #0e5269); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#56c4f0, #0e5269); 
+	
+	background: transparent; 
+
 	}
 
 }
 .pointScore{
-	  -webkit-animation:  blink 1s infinite;
-  	  -moz-animation: blink 1s infinite;
+background: -webkit-linear-gradient(#FF9900, #FF6600); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#FF9900, #FF6600); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#FF9900, #FF6600); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#FF9900, #FF6600); 
+      animation:  blink  1s infinite;	 
+
 	  -o-animation:  blink  1s infinite;
-      animation:  blink  1s infinite;
+
+       -webkit-animation:  blink 1s infinite;
+         	  -moz-animation: blink 1s infinite;
       
 }
-#menuDiv{
+@-moz-keyframes blink {
+	0%{background-color:transparent;}
+	100%{background: -moz-linear-gradient(#56c4f0, #0e5269);}
+}
+.menuDiv{
 width:300px;
 height:28px;
-	color:#4a5c82;
+	color:white;
+	background:black;
+	border:1px solid black;
 }
-#menuDiv .gameActions{
+
+.menuDiv .gameActions{
 	float:left;
 	width:28px;
 	height:28px;
-
+	margin: 0px 3px;
 }
-#menuDiv .restart{
+.menuDiv .restart{
 	background:transparent url('restart.png');
 }
-#menuDiv .pause{
+.menuDiv .pause{
 	background:transparent url('pause.png');
 }
-#menuDiv .play{
+.menuDiv .play{
 	background:transparent url('play.png');
 }	
-#menuDiv .score,
-#menuDiv .level
+.menuDiv .score,
+.menuDiv .level
 {
 	float:right;
 	vertical-align: middle;
 	line-height:28px;
 	margin:0px 5px;
 	
+}
+.menuDiv .level{
+	float:left;
 }

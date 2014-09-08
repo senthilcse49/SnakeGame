@@ -1,3 +1,4 @@
+
 angular.module('myApp',['snakeGame']);
 angular.module('snakeGame',[])
 	.directive('snake',function(){
@@ -34,6 +35,7 @@ angular.module('snakeGame',[])
 				scope.initialStartPoint = scope.startPoint;
 				scope.initialendPoint = scope.endPoint;
 				scope.intervalVar = setInterval(scope.moveSnake,scope.speed[scope.level]);
+				scope.createWall();
 			}
 			
 			
@@ -43,6 +45,7 @@ angular.module('snakeGame',[])
       //  console.log($scope);
 		$scope.level =0;
 		$scope.speed =[200,150,100,75,60,50,40,30,20];
+		$scope.difficulty = 'easy';
         $scope.pointStringArr =';';
         $scope.startingPointArr ='';
         $scope.initialStartPoint =0;
@@ -55,19 +58,33 @@ angular.module('snakeGame',[])
 		$scope.intervalVar =0;
 		$scope.score =0;
 		$scope.restart = function(){
-			$('.block').removeClass("marked");
-			$('.block').removeClass("pointScore");
-			
+		$('.block').removeClass("marked");
+		$('.block').removeClass("pointScore");
+		$(document).on('swipeup', $scope.changeDirection('top'));	
+		$(document).on('swipedown', $scope.changeDirection('down'));	
+		$(document).on('swiperight', $scope.changeDirection('top'));	
+		$(document).on('swipeleft', $scope.changeDirection('top'));	
 			var pointStr =  $scope.startingPointArr.split(";");
 			for(var index=0;index<pointStr.length;index++){
 				if(pointStr[index] && $('#block'+pointStr[index]))
-					$('#block'+pointStr[index]).addClass("marked");
+					$('.block'+pointStr[index]).addClass("marked");
 				$scope.createPoints();
 				$scope.score = 0;
 				$scope.level = 0;
 				
 			}
 			
+		 }
+		 $scope.changeDifficultLevel = function(diff,event){
+		 	if(!$(event.target).hasClass("current") )
+		 	{	
+			 	$('.difficultLevel label').removeClass("current");
+				alert(diff);
+			 	$(event.target).addClass("current");
+			 	$scope.difficulty = diff;
+			 	$scope.restartGame();
+			 	$scope.gameOver = false;
+		 	}
 		 }
         $scope.createPoints = function() {
             if($('.pointScore').length == 0){
@@ -83,6 +100,27 @@ angular.module('snakeGame',[])
 					$('#block'+$scope.pointvar).addClass("pointScore")
 				}
         };
+         $scope.restartGame = function(){
+         	clearInterval($scope.intervalVar);
+            $('.block').removeClass("marked");
+           
+            $scope.pointStringArr = $scope.startingPointArr;
+            var pointsArr = $scope.pointStringArr.split(";");
+
+            for(var index=0;index<pointsArr.length;index++){
+
+           		if(pointsArr[index] !=undefined && pointsArr[index] != ""){
+           		   	$('#block'+pointsArr[index]).addClass("marked");
+	           	}
+            }
+            $scope.currDirection = 'down';
+	   	    $scope.endPoint = $scope.initialendPoint;
+		    $scope.startPoint = $scope.initialStartPoint;
+			$scope.level = 0;
+			$scope.score = 0;			
+			$scope.intervalVar = setInterval($scope.moveSnake,$scope.speed[$scope.level]);
+        };   
+        
 	        
         $scope.catchKeyDown = function(event) {
 
@@ -111,7 +149,7 @@ angular.module('snakeGame',[])
         		
         	}
         	else if($scope.gameOnClickAction == 'play'){
-        		$scope.intervalVar = setInterval($scope.moveSnake,100);
+        		$scope.intervalVar = setInterval($scope.moveSnake,$scope.speed[$scope.level]);
         		
         		$scope.gameOnClickAction = "pause";
         	}
@@ -136,15 +174,21 @@ angular.module('snakeGame',[])
         	var startPoint  = $scope.startPoint;
 			if(currDirection=='down'){
 				if(startPoint+30 >= 900){
-					startPoint -= 870;
-
+					if($scope.difficulty === 'easy')
+						startPoint -= 870;
+					else
+						startPoint = -1;
 				}
 				else
 					startPoint += 30;
 			}
 			else if(currDirection=='right'){
 				if((startPoint+1)%30 == 0){
-					startPoint -= 29;
+					if($scope.difficulty === 'easy')
+						startPoint -= 29;
+					else
+						startPoint = -1;
+							
 				}
 				else
 					startPoint += 1;
@@ -152,14 +196,22 @@ angular.module('snakeGame',[])
 			}
 			else if(currDirection=='top'){
 				if(startPoint-30 <= 0){
-					startPoint += 870;
+					
+					if($scope.difficulty === 'easy')
+						startPoint += 870;
+					else
+						startPoint = -1;
 				}
 			else
 				startPoint -= 30;
 			}
 			else {
 				if(startPoint%30 == 0){
-					startPoint += 29;
+					
+					if($scope.difficulty === 'easy')
+						startPoint += 29;
+					else
+						startPoint = -1;
 				}
 				else
 					startPoint -= 1;
@@ -189,7 +241,9 @@ angular.module('snakeGame',[])
 					$scope.gameOnClickAction = 'Restart';
 					$scope.gameOver = true;
 					clearInterval($scope.intervalVar);
-					//return false;
+					$('#mask').show();
+					return false;
+					
 				}
 				if($scope.startPoint == $scope.pointvar)
 				{
@@ -203,13 +257,15 @@ angular.module('snakeGame',[])
 					$scope.pointStringArr = ";"+$scope.startPoint+$scope.pointStringArr;
 					$('#block'+$scope.startPoint).addClass("marked");
 					$scope.startPoint = $scope.getStartPoint($scope.currDirection);
-					if($scope.checkClash()){
+					
+					if($scope.checkClash() ){
 						//alert("game over!!")
 						$scope.gameOver = true;
 						$scope.nextActionText = 'Game Over';
 						$scope.gameOnClickAction = 'Restart';
 						clearInterval($scope.intervalVar);
-						//return false;
+						$('#mask').show();
+						return false;
 					}
 					$scope.pointStringArr = ";"+$scope.startPoint+$scope.pointStringArr;
 					$('#block'+$scope.startPoint).addClass("marked");
@@ -226,14 +282,25 @@ angular.module('snakeGame',[])
 		} 
     	
         $scope.checkClash = function(){
+        	if($scope.startPoint == -1)
+        		return true;
      		var pointStringArr = $scope.pointStringArr;
 			var clashIndex = pointStringArr.indexOf(";"+$scope.startPoint+";");
 			if(clashIndex != -1)
 				return true;
 			
-			
+			if($('#block'+$scope.startPoint).hasClass("wall"))	
+				return true;
 			return false;	
 		}
-      
+      	$scope.createWall = function(){
+		var idIndex = 159;
+		$('#block'+idIndex).addClass("wall");
+		for(var i=0;i<11;i++){
+			idIndex +=1;
+			$('#block'+idIndex).addClass("wall");
+		}
+		
+	}
        
     });
